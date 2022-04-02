@@ -7,6 +7,7 @@
     android:paddingTop="?attr/actionBarSize">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:elevation="0dp"
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,5 +30,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
+
+    <View
+        android:id="@+id/add_iv_container"
+        android:layout_width="72dp"
+        android:layout_height="66dp"
+        android:src="@drawable/index_new_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/addIv"
+        android:layout_width="72dp"
+        android:layout_height="66dp"
+        android:src="@drawable/index_new_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
