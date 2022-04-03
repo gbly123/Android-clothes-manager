@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.R;
 
-public class ResultViewHolder extends RecyclerView.ViewHolder {
+public class TalkViewHolder extends RecyclerView.ViewHolder {
 
     public TextView resultItemTv;
 
-    public ResultViewHolder(@NonNull View itemView) {
+    public TalkViewHolder(@NonNull View itemView) {
         super(itemView);
         init();
     }

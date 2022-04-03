@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.R;
+import com.example.redbook.db.entity.TalkCategory;
+import com.example.redbook.ui.add.PicAdapter;
 import com.example.redbook.ui.components.viewholder.CategoryViewHolder;
 
 import java.util.ArrayList;
@@ -15,7 +17,13 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
-    private List<String> mList = new ArrayList<>();
+    private List<TalkCategory> mList = new ArrayList<>();
+
+    private OnCategoryItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnCategoryItemClickListener itemClickListener) {
+        onItemClickListener = itemClickListener;
+    }
 
     @NonNull
     @Override
@@ -26,8 +34,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        String s = mList.get(position);
-        holder.categoryItemTv.setText(s);
+        TalkCategory talkCategory = mList.get(position);
+        holder.categoryItemTv.setText(talkCategory.name);
+
+        holder.categoryItemTv.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.categoryItemClick(talkCategory);
+            }
+        });
     }
 
     @Override
@@ -35,8 +49,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         return mList.size();
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<TalkCategory> list) {
+        mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public interface OnCategoryItemClickListener {
+        void categoryItemClick(TalkCategory category);
     }
 }

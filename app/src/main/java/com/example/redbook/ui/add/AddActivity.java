@@ -2,8 +2,10 @@ package com.example.redbook.ui.add;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,6 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.redbook.R;
+import com.example.redbook.db.RedBookDataBase;
+import com.example.redbook.db.dao.TalkCategoryDao;
+import com.example.redbook.db.entity.Talk;
+import com.example.redbook.db.entity.TalkCategory;
 import com.example.redbook.ui.components.SpacesItemDecoration;
 import com.example.redbook.ui.components.TalkPopup;
 import com.example.redbook.utils.CheckPermission;
@@ -34,7 +40,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemClickListener, TextWatcher, View.OnClickListener {
+public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemClickListener, TextWatcher, View.OnClickListener, TalkPopup.OnTalkItemClickListener {
 
     private static final int REQUEST_CODE_CHOOSE = 0;
     private static final int MAX_PIC = 9;
@@ -52,8 +58,8 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         setContentView(R.layout.activity_add);
         initView();
         checkPermission(9);
-
     }
+
 
     private void initView() {
         picRv = findViewById(R.id.pic_rv);
@@ -179,19 +185,19 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
     private void showPop() {
         if (talkPopup == null) {
             int height = getWindowManager().getDefaultDisplay().getHeight();
-            talkPopup = new TalkPopup(this, (int) (height / 2.5));
+            talkPopup = new TalkPopup(this, (int) (height / 2.5), this);
+            talkPopup.setOnItemClickListener(this);
         }
-        List<String> categoryList = new ArrayList<>();
-        List<String> resultList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            categoryList.add("分类" + i);
-        }
-        for (int i = 0; i < 50; i++) {
-            resultList.add("结果" + i);
-        }
-        talkPopup.setCategory(categoryList);
-        talkPopup.setResult(resultList);
-
         talkPopup.showAtLocation(findViewById(R.id.submit_tv), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    @Override
+    public void talkItemClick(Talk talk) {
+        String name = talk.name;
+
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        if (talkPopup != null) {
+            talkPopup.dismiss();
+        }
     }
 }
