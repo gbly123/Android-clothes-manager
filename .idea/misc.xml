@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/layout/activity_add.xml" value="0.23802083333333332" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/drawable/context_bg_shape.xml" value="0.26875" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/drawable/edit_text_bg_shape.xml" value="0.26875" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/drawable/submit_bg_shape.xml" value="0.26875" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/drawable/talk_bg_shape.xml" value="0.26875" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/layout/activity_add.xml" value="0.22" />
         <entry key="..\:/A_JOB/code/redBook/app/src/main/res/layout/activity_main.xml" value="0.2526041666666667" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/layout/pic_item_layout.xml" value="0.2526041666666667" />
+        <entry key="..\:/A_JOB/code/redBook/app/src/main/res/xml/photo_path.xml" value="0.1171875" />
       </map>
     </option>
   </component>

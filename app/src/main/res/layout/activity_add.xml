@@ -6,4 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".ui.add.AddActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pic_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/title_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/title_bg_shape"
+        android:hint="填写标题会有更多赞哦~"
+        android:maxLength="20"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:textColor="#222"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pic_rv" />
+
+    <TextView
+        android:id="@+id/titie_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textColor="#999"
+        android:textSize="14sp"
+        app:layout_constraintRight_toRightOf="@id/title_et"
+        app:layout_constraintTop_toTopOf="@id/title_et" />
+
+    <EditText
+        android:id="@+id/content_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/context_bg_shape"
+        android:gravity="top"
+        android:hint="添加正文"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:scrollbars="vertical"
+        android:textColor="#555"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_et" />
+
+    <TextView
+        android:id="@+id/add_talk_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/talk_bg_shape"
+        android:text="# 话题"
+        android:textColor="#5a5a5a"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/content_et"
+        app:layout_constraintTop_toBottomOf="@id/content_et" />
+
+
+    <TextView
+        android:id="@+id/submit_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/submit_bg_shape"
+        android:gravity="center"
+        android:text="发布笔记"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
