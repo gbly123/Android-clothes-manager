@@ -21,10 +21,14 @@ public class Diary {
     @ColumnInfo(name = "diray_talk")
     public String talk;
 
-    public Diary(String title, String content, String picPath, String talk) {
+    @ColumnInfo(name = "diray_time")
+    public long time;
+
+    public Diary(String title, String content, String picPath, String talk, long time) {
         this.title = title;
         this.content = content;
         this.picPath = picPath;
         this.talk = talk;
+        this.time = time;
     }
 }

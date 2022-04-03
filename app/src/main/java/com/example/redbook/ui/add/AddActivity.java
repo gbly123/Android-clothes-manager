@@ -192,7 +192,7 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         List<Uri> data = picAdapter.getData();
         String uriString = getUriString(data);
         String talkString = getTalkString(content);
-        Diary diary = new Diary(title, content, uriString, talkString);
+        Diary diary = new Diary(title, content, uriString, talkString, System.currentTimeMillis());
         RedBookDataBase.getRedBookDataBaseInstance(this).getDiaryDao().insertTalk(diary);
     }
 

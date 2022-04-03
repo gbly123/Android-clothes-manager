@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.redbook.ui.notifications.NotificationsFragment"
+        android:name="com.example.redbook.ui.store.StoreFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_store" />
 </navigation>
