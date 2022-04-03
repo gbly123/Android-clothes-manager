@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.redbook.R;
 import com.example.redbook.ui.components.SpacesItemDecoration;
+import com.example.redbook.ui.components.TalkPopup;
 import com.example.redbook.utils.CheckPermission;
 import com.example.redbook.utils.MyGlideEngine;
 import com.zhihu.matisse.Matisse;
@@ -29,9 +31,10 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemClickListener, TextWatcher {
+public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemClickListener, TextWatcher, View.OnClickListener {
 
     private static final int REQUEST_CODE_CHOOSE = 0;
     private static final int MAX_PIC = 9;
@@ -41,6 +44,7 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
     private EditText titleEt;
     private EditText contentEt;
     private TextView titleNumTv;
+    private TalkPopup talkPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,11 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         contentEt = findViewById(R.id.content_et);
         titleEt.addTextChangedListener(this);
         titleNumTv = findViewById(R.id.titie_num_tv);
+
+        View submitTv = findViewById(R.id.submit_tv);
+        submitTv.setOnClickListener(this);
+        View addTalkTv = findViewById(R.id.add_talk_tv);
+        addTalkTv.setOnClickListener(this);
     }
 
     @Override
@@ -154,5 +163,35 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
     public void afterTextChanged(Editable s) {
         int length = titleEt.getText().length();
         titleNumTv.setText(String.valueOf(MAX_TITLE_LENGTH - length));
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.submit_tv) {
+            //提交
+        } else if (id == R.id.add_talk_tv) {
+            //话题
+            showPop();
+        }
+    }
+
+    private void showPop() {
+        if (talkPopup == null) {
+            int height = getWindowManager().getDefaultDisplay().getHeight();
+            talkPopup = new TalkPopup(this, (int) (height / 2.5));
+        }
+        List<String> categoryList = new ArrayList<>();
+        List<String> resultList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            categoryList.add("分类" + i);
+        }
+        for (int i = 0; i < 50; i++) {
+            resultList.add("结果" + i);
+        }
+        talkPopup.setCategory(categoryList);
+        talkPopup.setResult(resultList);
+
+        talkPopup.showAtLocation(findViewById(R.id.submit_tv), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 }

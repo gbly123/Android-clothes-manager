@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/category_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/talk_bg_shape"
+        android:text="衣物种类"
+        android:textColor="#444"
+        android:textSize="16sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
