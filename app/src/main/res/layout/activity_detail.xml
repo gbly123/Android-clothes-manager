@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/top_nav"
-        layout="@layout/top_navigation_bar_layout"
+        layout="@layout/detail_top_navigation_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:minHeight="?android:attr/actionBarSize" />
@@ -54,6 +54,115 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/say_bg_shape"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_nav"
+        app:layout_constraintHorizontal_chainStyle="spread"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/layout2"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav">
+
+        <ImageView
+            android:id="@+id/write"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/matrix_r10_input_comment_night" />
+
+        <TextView
+            android:id="@+id/say"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="说点什么..."
+            android:textColor="#bbb"
+            android:textSize="14sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_nav"
+        app:layout_constraintLeft_toRightOf="@id/layout1"
+        app:layout_constraintRight_toLeftOf="@id/layout3"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav">
+
+        <ImageView
+            android:id="@+id/iv1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/matrix_video_feed_item_like_v2_night" />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.1万"
+            android:textColor="#DDD"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_nav"
+        app:layout_constraintLeft_toRightOf="@id/layout2"
+        app:layout_constraintRight_toLeftOf="@id/layout4"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav">
+
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/matrix_followfeed_collect_black_night" />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1228"
+            android:textColor="#DDD"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_nav"
+        app:layout_constraintLeft_toRightOf="@id/layout3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav">
+
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/matrix_followfeed_comment_black_v2_night" />
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4789"
+            android:textColor="#DDD"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.redbook.ui.detail;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,14 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.redbook.R;
 import com.example.redbook.databinding.ActivityDetailBinding;
 import com.example.redbook.db.entity.Diary;
+import com.example.redbook.ui.add.AddActivity;
+import com.example.redbook.utils.GlideCircleTransform;
 import com.example.redbook.utils.StatusBarUtils;
 
 public class DetailActivity extends AppCompatActivity {
@@ -51,6 +58,27 @@ public class DetailActivity extends AppCompatActivity {
 
         binding.title.setText(diary.title);
         binding.content.setText(diary.content);
+
+        ImageView head = binding.topNav.head;
+        Glide.with(this)
+                .load(R.drawable.capa_demo_filter_4)
+                .centerCrop()
+                .bitmapTransform(new GlideCircleTransform(this))
+                .crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(head);
+
+        ImageView leftIv = binding.topNav.leftIv;
+        leftIv.setOnClickListener(v -> finish());
+
+        binding.topNav.right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, AddActivity.class);
+                Bundle extras = getIntent().getExtras();
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData() {

@@ -1,10 +1,5 @@
 package com.example.redbook.ui.add;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +18,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.redbook.R;
 import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
@@ -35,6 +35,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemClickListener, TextWatcher, View.OnClickListener, TalkPopup.OnTalkItemClickListener {
@@ -53,12 +54,37 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
     public static final String LEFT_SPACE = " #";
     public static final String RIGHT_SPACE = " ";
 
+    public static final String KEY_DIARY = "KEY_DIARY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         initView();
-        checkPermission(9);
+        initData();
+//        checkPermission(9);
+    }
+
+    private void initData() {
+        Bundle bundle = getIntent().getExtras();
+        Diary diary = (Diary) bundle.getSerializable(KEY_DIARY);
+        if (diary != null) {
+            String picPath = diary.picPath;
+            String[] split = picPath.split("\\|");
+            List<Uri> list = new ArrayList<>();
+            for (int i = 0; i < split.length; i++) {
+                try {
+                    Uri uri = Uri.parse(split[i]);
+                    list.add(uri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            picAdapter.setData(list);
+
+            titleEt.setText(diary.title);
+            contentEt.setText(diary.content);
+        }
     }
 
 
@@ -190,6 +216,12 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         String title = titleEt.getText().toString();
         String content = contentEt.getText().toString();
         List<Uri> data = picAdapter.getData();
+
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content) || data == null || data.size() == 0) {
+            Toast.makeText(this, "标题、正文、图片不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String uriString = getUriString(data);
         String talkString = getTalkString(content);
         Diary diary = new Diary(title, content, uriString, talkString, System.currentTimeMillis());
