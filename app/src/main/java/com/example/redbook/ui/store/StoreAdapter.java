@@ -31,6 +31,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
         this.screenWidth = screenWidth;
     }
 
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        onItemClickListener = itemClickListener;
+    }
+
     @NonNull
     @Override
     public StoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,6 +72,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
                 .bitmapTransform(new GlideCircleTransform(mContext))
                 .crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.head);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.itemClick(diary);
+                }
+            }
+        });
     }
 
     @Override
@@ -77,5 +92,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public interface OnItemClickListener {
+        void itemClick(Diary diary);
     }
 }

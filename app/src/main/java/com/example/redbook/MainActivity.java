@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         int statusBarHeight = StatusBarUtils.getStatusBarHeight(this);
 
         ConstraintLayout container = binding.container;
-        container.setPadding(0,statusBarHeight,0,0);
+        container.setPadding(0, statusBarHeight, 0, 0);
 
         int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         initDbData();
     }
 
-    public static void transparentStatusBar(@NonNull final Window window) {
+    public void transparentStatusBar(@NonNull final Window window) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

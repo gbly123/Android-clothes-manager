@@ -1,13 +1,12 @@
 package com.example.redbook.ui.store;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,13 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.redbook.databinding.FragmentStoreBinding;
 import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
+import com.example.redbook.ui.detail.DetailActivity;
 
 import java.util.List;
 
 /**
  * 穿搭库
  */
-public class StoreFragment extends Fragment {
+public class StoreFragment extends Fragment implements StoreAdapter.OnItemClickListener {
 
     private StoreViewModel storeViewModel;
     private FragmentStoreBinding binding;
@@ -43,6 +43,7 @@ public class StoreFragment extends Fragment {
         int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
 
         StoreAdapter adapter = new StoreAdapter(getContext(), screenWidth);
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         RedBookDataBase.getRedBookDataBaseInstance(getContext()).getDiaryDao().getAllDiary().observe(getViewLifecycleOwner(), new Observer<List<Diary>>() {
@@ -59,5 +60,14 @@ public class StoreFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void itemClick(Diary diary) {
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetailActivity.KEY_DIARY, diary);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
