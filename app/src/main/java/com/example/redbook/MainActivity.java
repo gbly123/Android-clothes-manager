@@ -1,21 +1,19 @@
 package com.example.redbook;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.example.redbook.db.RedBookDataBase;
-import com.example.redbook.db.dao.TalkCategoryDao;
-import com.example.redbook.db.dao.TalkDao;
-import com.example.redbook.db.entity.Talk;
-import com.example.redbook.db.entity.TalkCategory;
-import com.example.redbook.ui.add.AddActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,6 +21,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.redbook.databinding.ActivityMainBinding;
+import com.example.redbook.db.RedBookDataBase;
+import com.example.redbook.db.dao.TalkCategoryDao;
+import com.example.redbook.db.dao.TalkDao;
+import com.example.redbook.db.entity.Talk;
+import com.example.redbook.db.entity.TalkCategory;
+import com.example.redbook.ui.add.AddActivity;
+import com.example.redbook.utils.StatusBarUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        transparentStatusBar(getWindow());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -43,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         item.setTitle("");
         item.setIcon(null);
 
+        int statusBarHeight = StatusBarUtils.getStatusBarHeight(this);
+
+        ConstraintLayout container = binding.container;
+        container.setPadding(0,statusBarHeight,0,0);
 
         int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
 
@@ -67,10 +78,24 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         initDbData();
+    }
+
+    public static void transparentStatusBar(@NonNull final Window window) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+            int vis = window.getDecorView().getSystemUiVisibility();
+            window.getDecorView().setSystemUiVisibility(option | vis);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     private void initDbData() {
