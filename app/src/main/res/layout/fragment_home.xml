@@ -13,5 +13,17 @@
         android:layout_height="50dp"
         android:minHeight="?android:attr/actionBarSize" />
 
+    <TextView
+        android:id="@+id/wendu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_nav" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

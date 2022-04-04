@@ -54,4 +54,5 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation 'com.alibaba:fastjson:1.1.71.android'
 }

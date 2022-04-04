@@ -2,6 +2,7 @@ package com.example.redbook.ui.home;
 
 import android.location.Address;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alibaba.fastjson.JSON;
 import com.example.redbook.databinding.FragmentHomeBinding;
+import com.example.redbook.model.Weather;
 import com.example.redbook.viewModel.RedBookViewModel;
 
 import java.io.IOException;
@@ -75,7 +78,20 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
-                    Log.e(TAG, result);
+                    Weather weather = new Weather(result);
+                    Log.e(TAG, JSON.toJSONString(weather));
+
+                    String wendu = "当前气温：" + weather.wendu + "℃ ," + weather.ganmao;
+
+                    getActivity().runOnUiThread(() -> {
+                        binding.wendu.setText(wendu);
+                        binding.wendu.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                        binding.wendu.setSingleLine(true);
+                        binding.wendu.setSelected(true);
+                        binding.wendu.setFocusable(true);
+                        binding.wendu.setFocusableInTouchMode(true);
+                    });
+
                 }
             }
         });
