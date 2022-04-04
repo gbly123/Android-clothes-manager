@@ -56,11 +56,21 @@
         app:layout_constraintLeft_toRightOf="@id/location" />
 
     <ImageView
-        android:id="@+id/right"
+        android:id="@+id/edit"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginRight="24dp"
-        android:src="@drawable/matrix_profile_mine_share_to_top_night"
+        android:src="@drawable/room_topic_edit_ic_night"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/delete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="24dp"
+        android:src="@drawable/xhs_theme_icon_delete_grey_15_night"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

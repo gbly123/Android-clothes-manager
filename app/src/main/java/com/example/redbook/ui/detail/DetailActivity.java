@@ -96,14 +96,16 @@ public class DetailActivity extends AppCompatActivity {
         ImageView leftIv = binding.topNav.leftIv;
         leftIv.setOnClickListener(v -> finish());
 
-        binding.topNav.right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, AddActivity.class);
-                Bundle extras = getIntent().getExtras();
-                intent.putExtras(extras);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
+        binding.topNav.edit.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailActivity.this, AddActivity.class);
+            Bundle extras = getIntent().getExtras();
+            intent.putExtras(extras);
+            startActivityForResult(intent, REQUEST_CODE);
+        });
+
+        binding.topNav.delete.setOnClickListener(v -> {
+            RedBookDataBase.getRedBookDataBaseInstance(DetailActivity.this).getDiaryDao().deleteDiary(diary);
+            finish();
         });
     }
 
