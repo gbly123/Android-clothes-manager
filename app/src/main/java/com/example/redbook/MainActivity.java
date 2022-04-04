@@ -2,6 +2,7 @@ package com.example.redbook;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,7 +15,9 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,15 +30,18 @@ import com.example.redbook.db.dao.TalkDao;
 import com.example.redbook.db.entity.Talk;
 import com.example.redbook.db.entity.TalkCategory;
 import com.example.redbook.ui.add.AddActivity;
+import com.example.redbook.utils.LocationUtils;
 import com.example.redbook.utils.StatusBarUtils;
+import com.example.redbook.viewModel.RedBookViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationUtils.OnAddressCallBack {
 
     private ActivityMainBinding binding;
+    private RedBookViewModel redViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         transparentStatusBar(getWindow());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        redViewModel = new ViewModelProvider(this).get(RedBookViewModel.class);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         MenuItem item = navView.getMenu().getItem(1);
@@ -82,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         initDbData();
+
+        getAddress();
+    }
+
+    private void getAddress() {
+        LocationUtils locationUtils = new LocationUtils(this);
+        locationUtils.setAddressListener(this);
+        locationUtils.checkPermission();
     }
 
     public void transparentStatusBar(@NonNull final Window window) {
@@ -165,4 +181,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void addressCallback(List<Address> result) {
+        Address address = result.get(0);
+        MutableLiveData<Address> liveData = redViewModel.getAddressLiveData();
+        liveData.postValue(address);
+    }
 }
