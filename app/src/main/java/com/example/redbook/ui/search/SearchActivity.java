@@ -1,23 +1,37 @@
 package com.example.redbook.ui.search;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.databinding.ActivitySearchBinding;
+import com.example.redbook.db.RedBookDataBase;
+import com.example.redbook.db.entity.Diary;
+import com.example.redbook.ui.detail.DetailActivity;
+import com.example.redbook.ui.store.StoreAdapter;
+import com.example.redbook.utils.GridItemDecoration;
 import com.example.redbook.utils.StatusBarUtils;
 
-public class SearchActivity extends AppCompatActivity {
+import java.util.List;
+
+public class SearchActivity extends AppCompatActivity implements StoreAdapter.OnItemClickListener {
 
     @NonNull
     private ActivitySearchBinding binding;
+    private StoreAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +44,42 @@ public class SearchActivity extends AppCompatActivity {
         int statusBarHeight = StatusBarUtils.getStatusBarHeight(this);
         ConstraintLayout container = binding.container;
         container.setPadding(0, statusBarHeight, 0, 0);
+
+        RecyclerView recyclerView = binding.list;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addItemDecoration(new GridItemDecoration(10));
+        int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+
+        adapter = new StoreAdapter(this, screenWidth);
+        adapter.setOnItemClickListener(this);
+        recyclerView.setAdapter(adapter);
+
+
+        binding.topNav.back.setOnClickListener(v -> finish());
+
+        binding.topNav.search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSearch();
+            }
+        });
+    }
+
+    private void startSearch() {
+
+        String key = binding.topNav.et.getText().toString();
+        if (TextUtils.isEmpty(key)) {
+            Toast.makeText(this, "关键字为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RedBookDataBase.getRedBookDataBaseInstance(this).getDiaryDao().getDiaryByKey(key).observe(this, new Observer<List<Diary>>() {
+            @Override
+            public void onChanged(List<Diary> diaries) {
+                adapter.setData(diaries);
+            }
+        });
     }
 
     public void transparentStatusBar(@NonNull final Window window) {
@@ -44,5 +94,14 @@ public class SearchActivity extends AppCompatActivity {
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+    }
+
+    @Override
+    public void itemClick(Diary diary) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetailActivity.KEY_DIARY, diary);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

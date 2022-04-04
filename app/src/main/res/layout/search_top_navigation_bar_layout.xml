@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="12dp"
         android:background="@drawable/search_et_bg_shape"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="@id/et_container"
         app:layout_constraintLeft_toRightOf="@id/search_iv"
         app:layout_constraintRight_toRightOf="@id/et_container"
