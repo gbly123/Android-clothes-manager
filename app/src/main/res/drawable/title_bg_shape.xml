@@ -10,7 +10,7 @@
     <item android:bottom="1px">
         <!--边框里面背景颜色 白色-->
         <shape>
-            <solid android:color="@color/white" />
+            <solid android:color="#0e0e10" />
         </shape>
     </item>
 

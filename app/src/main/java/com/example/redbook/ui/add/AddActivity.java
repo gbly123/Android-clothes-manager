@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -14,16 +15,21 @@ import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.R;
+import com.example.redbook.databinding.ActivityAddBinding;
 import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
 import com.example.redbook.db.entity.Talk;
@@ -31,6 +37,7 @@ import com.example.redbook.ui.components.SpacesItemDecoration;
 import com.example.redbook.ui.components.TalkPopup;
 import com.example.redbook.utils.CheckPermission;
 import com.example.redbook.utils.MyGlideEngine;
+import com.example.redbook.utils.StatusBarUtils;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -56,15 +63,40 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
 
     public static final String KEY_DIARY = "KEY_DIARY";
     private Diary editDiary;
+    @NonNull
+    private ActivityAddBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        transparentStatusBar(getWindow());
+
+        binding = ActivityAddBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        int statusBarHeight = StatusBarUtils.getStatusBarHeight(this);
+
+        ConstraintLayout container = binding.main;
+        container.setPadding(0, statusBarHeight, 0, 0);
+
         initView();
         initData();
-//        checkPermission(9);
+    }
+
+    public void transparentStatusBar(@NonNull final Window window) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+            int vis = window.getDecorView().getSystemUiVisibility();
+            window.getDecorView().setSystemUiVisibility(option | vis);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     private void initData() {
@@ -113,6 +145,8 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         submitTv.setOnClickListener(this);
         View addTalkTv = findViewById(R.id.add_talk_tv);
         addTalkTv.setOnClickListener(this);
+
+        binding.topNav.back.setOnClickListener(v -> finish());
     }
 
     @Override
