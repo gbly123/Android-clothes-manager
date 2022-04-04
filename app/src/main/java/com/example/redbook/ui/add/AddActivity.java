@@ -55,6 +55,7 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
     public static final String RIGHT_SPACE = " ";
 
     public static final String KEY_DIARY = "KEY_DIARY";
+    private Diary editDiary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +68,9 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
-        Diary diary = (Diary) bundle.getSerializable(KEY_DIARY);
-        if (diary != null) {
-            String picPath = diary.picPath;
+        editDiary = (Diary) bundle.getSerializable(KEY_DIARY);
+        if (editDiary != null) {
+            String picPath = editDiary.picPath;
             String[] split = picPath.split("\\|");
             List<Uri> list = new ArrayList<>();
             for (int i = 0; i < split.length; i++) {
@@ -82,8 +83,8 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
             }
             picAdapter.setData(list);
 
-            titleEt.setText(diary.title);
-            contentEt.setText(diary.content);
+            titleEt.setText(editDiary.title);
+            contentEt.setText(editDiary.content);
         }
     }
 
@@ -225,7 +226,12 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         String uriString = getUriString(data);
         String talkString = getTalkString(content);
         Diary diary = new Diary(title, content, uriString, talkString, System.currentTimeMillis());
+        if (editDiary != null) {
+            diary.id = editDiary.id;
+        }
         RedBookDataBase.getRedBookDataBaseInstance(this).getDiaryDao().insertTalk(diary);
+        Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private String getUriString(List<Uri> data) {
