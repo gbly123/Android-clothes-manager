@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.R;
 import com.example.redbook.db.entity.TalkCategory;
-import com.example.redbook.ui.add.PicAdapter;
 import com.example.redbook.ui.components.viewholder.CategoryViewHolder;
 
 import java.util.ArrayList;
@@ -34,19 +33,36 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        TalkCategory talkCategory = mList.get(position);
-        holder.categoryItemTv.setText(talkCategory.name);
 
-        holder.categoryItemTv.setOnClickListener(v -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.categoryItemClick(talkCategory);
-            }
-        });
+        if (position >= mList.size()) {
+            //ADD
+            holder.addIv.setVisibility(View.VISIBLE);
+            holder.categoryItemTv.setVisibility(View.GONE);
+            holder.addIv.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.addCategoryClick();
+                }
+            });
+        } else {
+            holder.addIv.setVisibility(View.GONE);
+            holder.categoryItemTv.setVisibility(View.VISIBLE);
+
+            TalkCategory talkCategory = mList.get(position);
+            holder.categoryItemTv.setText(talkCategory.name);
+
+            holder.categoryItemTv.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.categoryItemClick(talkCategory);
+                }
+            });
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList.size() + 1;
     }
 
     public void setData(List<TalkCategory> list) {
@@ -57,5 +73,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     public interface OnCategoryItemClickListener {
         void categoryItemClick(TalkCategory category);
+
+        void addCategoryClick();
     }
 }

@@ -1,6 +1,12 @@
 package com.example.redbook.ui.components;
 
+import static com.example.redbook.ui.talk.AddTalkActivity.ADD_CATEGORY;
+import static com.example.redbook.ui.talk.AddTalkActivity.ADD_TALK;
+import static com.example.redbook.ui.talk.AddTalkActivity.ADD_TYPE;
+import static com.example.redbook.ui.talk.AddTalkActivity.CATEGORY_ID;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +14,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +26,7 @@ import com.example.redbook.db.entity.Talk;
 import com.example.redbook.db.entity.TalkCategory;
 import com.example.redbook.ui.components.adapter.CategoryAdapter;
 import com.example.redbook.ui.components.adapter.TalkAdapter;
+import com.example.redbook.ui.talk.AddTalkActivity;
 
 import java.util.List;
 
@@ -74,7 +79,7 @@ public class TalkPopup extends PopupWindow implements CategoryAdapter.OnCategory
         talkLiveData = new MutableLiveData<>();
         talkLiveData.observe(mLifecycleOwner, integer -> {
             TalkDao talkDao = dataBase.getTalkDao();
-            talkDao.getTalksByCategory(integer).observe(mLifecycleOwner, talks -> setTalk(talks));
+            talkDao.getTalksByCategory(integer).observe(mLifecycleOwner, talks -> setTalk(talks, integer));
         });
 
 
@@ -114,11 +119,11 @@ public class TalkPopup extends PopupWindow implements CategoryAdapter.OnCategory
         categoryAdapter.setData(talkCategories);
     }
 
-    public void setTalk(List<Talk> talks) {
+    public void setTalk(List<Talk> talks, int category) {
         if (talks == null) {
             return;
         }
-        talkAdapter.setData(talks);
+        talkAdapter.setData(talks, category);
     }
 
     @Override
@@ -127,10 +132,25 @@ public class TalkPopup extends PopupWindow implements CategoryAdapter.OnCategory
     }
 
     @Override
+    public void addCategoryClick() {
+        Intent intent = new Intent(mContext, AddTalkActivity.class);
+        intent.putExtra(ADD_TYPE, ADD_CATEGORY);
+        mContext.startActivity(intent);
+    }
+
+    @Override
     public void talkItemClick(Talk talk) {
         if (onItemClickListener != null) {
             onItemClickListener.talkItemClick(talk);
         }
+    }
+
+    @Override
+    public void addTalkClick(int category) {
+        Intent intent = new Intent(mContext, AddTalkActivity.class);
+        intent.putExtra(ADD_TYPE, ADD_TALK);
+        intent.putExtra(CATEGORY_ID, category);
+        mContext.startActivity(intent);
     }
 
 

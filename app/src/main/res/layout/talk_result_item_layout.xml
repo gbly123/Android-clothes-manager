@@ -13,4 +13,13 @@
         android:textColor="#444"
         android:textSize="16sp" />
 
+    <ImageView
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:padding="6dp"
+        android:src="@drawable/capa_icon_add_more_topic_black_14_night" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

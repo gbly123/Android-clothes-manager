@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RedBook">
         <activity
+            android:name=".ui.talk.AddTalkActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false" />
         <activity

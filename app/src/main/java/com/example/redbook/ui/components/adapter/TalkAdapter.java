@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.R;
 import com.example.redbook.db.entity.Talk;
-import com.example.redbook.ui.add.PicAdapter;
 import com.example.redbook.ui.components.viewholder.TalkViewHolder;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkViewHolder> {
     private List<Talk> mList = new ArrayList<>();
 
     private OnTalkItemClickListener onItemClickListener;
+    private int category;
 
     public void setOnItemClickListener(OnTalkItemClickListener itemClickListener) {
         onItemClickListener = itemClickListener;
@@ -34,28 +34,48 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TalkViewHolder holder, int position) {
-        Talk talk = mList.get(position);
-        holder.resultItemTv.setText("# " + talk.name);
 
-        holder.resultItemTv.setOnClickListener(v -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.talkItemClick(talk);
-            }
-        });
+        if (position >= mList.size()) {
+            //ADD
+            holder.addIv.setVisibility(View.VISIBLE);
+            holder.resultItemTv.setVisibility(View.GONE);
+            holder.addIv.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.addTalkClick(category);
+                }
+            });
+        } else {
+            holder.addIv.setVisibility(View.GONE);
+            holder.resultItemTv.setVisibility(View.VISIBLE);
+
+            Talk talk = mList.get(position);
+            holder.resultItemTv.setText("# " + talk.name);
+
+            holder.resultItemTv.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.talkItemClick(talk);
+                }
+            });
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList.size() + 1;
     }
 
-    public void setData(List<Talk> list) {
+    public void setData(List<Talk> list, int category) {
         mList.clear();
         mList.addAll(list);
+        this.category = category;
         notifyDataSetChanged();
     }
 
     public interface OnTalkItemClickListener {
         void talkItemClick(Talk talk);
+
+        void addTalkClick(int category);
     }
 }
