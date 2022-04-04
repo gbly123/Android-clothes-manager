@@ -57,6 +57,7 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
     public static final String KEY_DIARY = "KEY_DIARY";
     private Diary editDiary;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,9 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            return;
+        }
         editDiary = (Diary) bundle.getSerializable(KEY_DIARY);
         if (editDiary != null) {
             String picPath = editDiary.picPath;
@@ -233,6 +237,7 @@ public class AddActivity extends AppCompatActivity implements PicAdapter.OnItemC
         Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
         finish();
     }
+
 
     private String getUriString(List<Uri> data) {
         StringBuilder sb = new StringBuilder();

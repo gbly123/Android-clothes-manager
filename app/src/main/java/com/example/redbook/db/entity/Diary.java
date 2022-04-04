@@ -14,17 +14,18 @@ public class Diary implements Serializable {
     @ColumnInfo(name = "diary_title")
     public String title;
 
-    @ColumnInfo(name = "diray_content")
+    @ColumnInfo(name = "diary_content")
     public String content;
 
-    @ColumnInfo(name = "diray_pic")
+    @ColumnInfo(name = "diary_pic")
     public String picPath;
 
-    @ColumnInfo(name = "diray_talk")
+    @ColumnInfo(name = "diary_talk")
     public String talk;
 
-    @ColumnInfo(name = "diray_time")
+    @ColumnInfo(name = "diary_time")
     public long time;
+
 
     public Diary(String title, String content, String picPath, String talk, long time) {
         this.title = title;

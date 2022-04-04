@@ -16,10 +16,10 @@ public interface DiaryDao {
     void insertTalk(Diary diary);
 
     //    @Query("select * from weather_city_table where city_name LIKE '%' || :message || '%' order by case when city_name = :message then 1 when city_name LIKE :message || '%' then 2 when city_name LIKE '%' || :message || '%' then 3 when city_name LIKE '%' || :message  then 4 else 0 END")
-    @Query("SELECT * FROM diary WHERE diary_title LIKE '%' || :key || '%' OR diray_talk LIKE '%' || :key || '%' OR diray_content LIKE '%' || :key || '%' ORDER BY CASE WHEN diary_title LIKE '%' || :key || '%' THEN 1 ELSE 10 END, CASE WHEN diray_talk LIKE '%' || :key || '%' THEN 2 ELSE 10 END, CASE WHEN diray_content LIKE '%' || :key || '%' THEN 3 ELSE 10 END")
+    @Query("SELECT * FROM diary WHERE diary_title LIKE '%' || :key || '%' OR diary_talk LIKE '%' || :key || '%' OR diary_content LIKE '%' || :key || '%' ORDER BY CASE WHEN diary_title LIKE '%' || :key || '%' THEN 1 ELSE 10 END, CASE WHEN diary_talk LIKE '%' || :key || '%' THEN 2 ELSE 10 END, CASE WHEN diary_content LIKE '%' || :key || '%' THEN 3 ELSE 10 END")
     LiveData<List<Diary>> getDiaryByKey(String key);
 
-    @Query("SELECT * FROM diary  ORDER BY diray_time DESC")
+    @Query("SELECT * FROM diary  ORDER BY diary_time DESC")
     LiveData<List<Diary>> getAllDiary();
 
     @Query("SELECT * FROM diary WHERE id =:id")
