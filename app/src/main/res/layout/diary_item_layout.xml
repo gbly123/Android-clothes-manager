@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp"
     android:background="@drawable/diary_bg_shape"
     android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="450dp"
         android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,7 +22,7 @@
         android:layout_margin="8dp"
         android:ellipsize="end"
         android:lines="2"
-        android:textColor="#555"
+        android:textColor="#FFF"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:text="张佳一"
-        android:textColor="#555"
+        android:textColor="#FFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/head"
         app:layout_constraintLeft_toRightOf="@id/head"
@@ -54,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:textColor="#555"
+        android:textColor="#FFF"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@id/head"
         app:layout_constraintTop_toBottomOf="@id/head" />

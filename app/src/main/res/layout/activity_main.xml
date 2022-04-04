@@ -4,14 +4,9 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#19191f">
+    android:background="#0e0e10">
 
-    <include
-        android:id="@+id/top_nav"
-        layout="@layout/top_navigation_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:minHeight="?android:attr/actionBarSize" />
+
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

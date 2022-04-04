@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
     tools:context=".ui.store.StoreFragment">
+
+    <include
+        android:id="@+id/top_nav"
+        layout="@layout/store_top_navigation_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:minHeight="?android:attr/actionBarSize" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
@@ -14,5 +20,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/top_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

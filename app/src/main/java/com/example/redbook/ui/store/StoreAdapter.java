@@ -50,18 +50,24 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
         Diary diary = mList.get(position);
         String picPath = diary.picPath;
         String uri = picPath.split("\\|")[0];
-        ViewGroup.LayoutParams layoutParams = holder.cover.getLayoutParams();
-        layoutParams.width = screenWidth / 2 - 10;
-        layoutParams.height = (int) (layoutParams.width * 1.5);
-        holder.cover.setLayoutParams(layoutParams);
+
         Glide.with(mContext)
                 .load(uri)
                 .centerCrop()
                 .bitmapTransform(new GlideRoundTransform(mContext, 10))
                 .crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.cover);
+
+
+        ViewGroup.LayoutParams layoutParams = holder.cover.getLayoutParams();
+        layoutParams.width = screenWidth / 2 - 10;
+        layoutParams.height = (int) (layoutParams.width * 1.5);
+        holder.cover.setLayoutParams(layoutParams);
+
+
+
         holder.title.setText(diary.title);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(diary.time);
         String format = sdf.format(date);
         holder.time.setText(format);

@@ -19,7 +19,7 @@ public interface DiaryDao {
     @Query("SELECT * FROM diary WHERE diary_title LIKE '%' || :key || '%' OR diray_talk LIKE '%' || :key || '%' OR diray_content LIKE '%' || :key || '%' ORDER BY CASE WHEN diary_title LIKE '%' || :key || '%' THEN 1 ELSE 10 END, CASE WHEN diray_talk LIKE '%' || :key || '%' THEN 2 ELSE 10 END, CASE WHEN diray_content LIKE '%' || :key || '%' THEN 3 ELSE 10 END")
     LiveData<List<Diary>> getDiaryByKey(String key);
 
-    @Query("SELECT * FROM diary  ORDER BY ID DESC")
+    @Query("SELECT * FROM diary  ORDER BY diray_time DESC")
     LiveData<List<Diary>> getAllDiary();
 
     @Query("SELECT * FROM diary WHERE id =:id")

@@ -17,6 +17,7 @@ import com.example.redbook.databinding.FragmentStoreBinding;
 import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
 import com.example.redbook.ui.detail.DetailActivity;
+import com.example.redbook.utils.GridItemDecoration;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnItemClickL
         RecyclerView recyclerView = binding.list;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
+        recyclerView.addItemDecoration(new GridItemDecoration(10));
         int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
 
         StoreAdapter adapter = new StoreAdapter(getContext(), screenWidth);
