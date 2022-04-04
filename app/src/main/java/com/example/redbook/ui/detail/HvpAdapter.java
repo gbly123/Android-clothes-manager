@@ -10,16 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.redbook.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class HvpAdapter extends RecyclerView.Adapter<HvpViewHolder> {
 
-    private List<String> mList;
+    private List<String> mList = new ArrayList<>();
 
-    public HvpAdapter( String picPath) {
+
+    public void setData(String picPath) {
         String[] split = picPath.split("\\|");
-        mList = Arrays.asList(split);
+        mList.clear();
+        mList.addAll(Arrays.asList(split));
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -13,22 +13,28 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.redbook.R;
 import com.example.redbook.databinding.ActivityDetailBinding;
+import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
 import com.example.redbook.ui.add.AddActivity;
 import com.example.redbook.utils.GlideCircleTransform;
 import com.example.redbook.utils.StatusBarUtils;
 
+import java.util.List;
+
 public class DetailActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 0;
     private ActivityDetailBinding binding;
     public static final String KEY_DIARY = "KEY_DIARY";
     private Diary diary;
+    private HvpAdapter hvpAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +53,34 @@ public class DetailActivity extends AppCompatActivity {
         initView();
     }
 
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        if (requestCode == REQUEST_CODE) {
+            //UPDATE
+            RedBookDataBase.getRedBookDataBaseInstance(this).getDiaryDao().getDiaryById(diary.id).observe(this, new Observer<List<Diary>>() {
+                @Override
+                public void onChanged(List<Diary> diaries) {
+                    if (diaries != null && diaries.size() > 0) {
+                        Diary diary = diaries.get(0);
+                        binding.title.setText(diary.title);
+                        binding.content.setText(diary.content);
+                        hvpAdapter.setData(diary.picPath);
+                    }
+                }
+            });
+        }
+    }
+
     private void initView() {
         ViewPager2 vp = binding.vp;
         int width = getWindowManager().getDefaultDisplay().getWidth();
         ViewGroup.LayoutParams layoutParams = vp.getLayoutParams();
         layoutParams.height = (int) (width * 1.2);
         vp.setLayoutParams(layoutParams);
-        HvpAdapter adapter = new HvpAdapter(diary.picPath);
-        vp.setAdapter(adapter);
+        hvpAdapter = new HvpAdapter();
+        vp.setAdapter(hvpAdapter);
+        hvpAdapter.setData(diary.picPath);
 
         binding.title.setText(diary.title);
         binding.content.setText(diary.content);
@@ -76,7 +102,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(DetailActivity.this, AddActivity.class);
                 Bundle extras = getIntent().getExtras();
                 intent.putExtras(extras);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }

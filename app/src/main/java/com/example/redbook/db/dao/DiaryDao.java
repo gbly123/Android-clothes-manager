@@ -5,7 +5,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.redbook.db.entity.Diary;
 
@@ -23,6 +22,6 @@ public interface DiaryDao {
     @Query("SELECT * FROM diary  ORDER BY ID DESC")
     LiveData<List<Diary>> getAllDiary();
 
-    @Update
-    void updateItem(Diary diary);
+    @Query("SELECT * FROM diary WHERE id =:id")
+    LiveData<List<Diary>> getDiaryById(int id);
 }
