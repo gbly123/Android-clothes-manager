@@ -22,6 +22,7 @@ import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
 import com.example.redbook.model.Weather;
 import com.example.redbook.ui.detail.DetailActivity;
+import com.example.redbook.ui.search.SearchActivity;
 import com.example.redbook.ui.store.StoreAdapter;
 import com.example.redbook.utils.GridItemDecoration;
 import com.example.redbook.viewModel.RedBookViewModel;
@@ -51,9 +52,16 @@ public class HomeFragment extends Fragment implements StoreAdapter.OnItemClickLi
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        binding.topNav.rightIv.setOnClickListener(v -> search());
+
         initData();
 
         return root;
+    }
+
+    private void search() {
+        Intent intent = new Intent(getContext(), SearchActivity.class);
+        startActivity(intent);
     }
 
     private void initData() {
