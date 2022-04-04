@@ -67,7 +67,7 @@
         android:inputType="textMultiLine"
         android:lines="5"
         android:scrollbars="vertical"
-        android:textColor="#555"
+        android:textColor="#fff"
         android:textColorHint="#bbb"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
