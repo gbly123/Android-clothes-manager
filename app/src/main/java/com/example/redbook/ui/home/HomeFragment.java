@@ -29,6 +29,9 @@ import com.example.redbook.viewModel.RedBookViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -139,9 +142,26 @@ public class HomeFragment extends Fragment implements StoreAdapter.OnItemClickLi
         });
     }
 
+    private String getSeason() {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(new Date());
+        int currentMonth = instance.get(Calendar.MONTH) + 1;
+        if (currentMonth >= 3 && currentMonth <= 5) {
+            return "春";
+        } else if (currentMonth > 5 && currentMonth <= 8) {
+            return "下";
+        } else if (currentMonth > 8 && currentMonth <= 11) {
+            return "秋";
+        } else {
+            return "冬";
+        }
+    }
+
     private void getRightDiary(List<Diary> list, String temperature) {
 
         List<Diary> rightList = new ArrayList<>();
+
+        String season = getSeason();
 
         for (Diary diary : list) {
             String talks = diary.talk;
@@ -159,17 +179,25 @@ public class HomeFragment extends Fragment implements StoreAdapter.OnItemClickLi
                                 int nowTemp = Integer.parseInt(temperature);
                                 if (nowTemp >= low && nowTemp <= high) {
                                     rightList.add(diary);
+                                    break;
                                 }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
+                } else if (talk.equals(season)) {
+                    rightList.add(diary);
+                    break;
                 }
             }
         }
 
-        adapter.setData(rightList);
+        if (rightList.size() > 0) {
+            Collections.shuffle(rightList);
+            adapter.setData(rightList);
+        }
+
     }
 
     @Override

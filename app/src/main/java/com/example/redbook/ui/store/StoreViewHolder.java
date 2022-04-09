@@ -14,7 +14,6 @@ import org.w3c.dom.Text;
 public class StoreViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView cover;
-    public ImageView head;
     public TextView title;
     public TextView time;
 
@@ -27,6 +26,5 @@ public class StoreViewHolder extends RecyclerView.ViewHolder {
         cover = itemView.findViewById(R.id.iv);
         title = itemView.findViewById(R.id.title);
         time = itemView.findViewById(R.id.time);
-        head = itemView.findViewById(R.id.head);
     }
 }

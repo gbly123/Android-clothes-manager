@@ -16,14 +16,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.redbook.R;
 import com.example.redbook.databinding.ActivityDetailBinding;
 import com.example.redbook.db.RedBookDataBase;
 import com.example.redbook.db.entity.Diary;
 import com.example.redbook.ui.add.AddActivity;
-import com.example.redbook.utils.GlideCircleTransform;
 import com.example.redbook.utils.StatusBarUtils;
 
 import java.util.List;
@@ -63,7 +59,7 @@ public class DetailActivity extends AppCompatActivity {
                 public void onChanged(List<Diary> diaries) {
                     if (diaries != null && diaries.size() > 0) {
                         Diary diary = diaries.get(0);
-                        binding.title.setText(diary.title);
+                        binding.topNav.title.setText(diary.title);
                         binding.content.setText(diary.content);
                         hvpAdapter.setData(diary.picPath);
                     }
@@ -82,16 +78,9 @@ public class DetailActivity extends AppCompatActivity {
         vp.setAdapter(hvpAdapter);
         hvpAdapter.setData(diary.picPath);
 
-        binding.title.setText(diary.title);
+        binding.topNav.title.setText(diary.title);
         binding.content.setText(diary.content);
 
-        ImageView head = binding.topNav.head;
-        Glide.with(this)
-                .load(R.drawable.capa_demo_filter_4)
-                .centerCrop()
-                .bitmapTransform(new GlideCircleTransform(this))
-                .crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(head);
 
         ImageView leftIv = binding.topNav.leftIv;
         leftIv.setOnClickListener(v -> finish());

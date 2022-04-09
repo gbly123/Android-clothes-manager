@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.redbook.R;
 import com.example.redbook.db.entity.Diary;
-import com.example.redbook.utils.GlideCircleTransform;
 import com.example.redbook.utils.GlideRoundTransform;
 
 import java.text.SimpleDateFormat;
@@ -72,19 +71,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
         String format = sdf.format(date);
         holder.time.setText(format);
 
-        Glide.with(mContext)
-                .load(R.drawable.capa_demo_filter_12)
-                .centerCrop()
-                .bitmapTransform(new GlideCircleTransform(mContext))
-                .crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.head);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.itemClick(diary);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.itemClick(diary);
             }
         });
     }

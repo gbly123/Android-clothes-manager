@@ -28,34 +28,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv" />
 
-    <ImageView
-        android:id="@+id/head"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintLeft_toLeftOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:text="张佳一"
-        android:textColor="#FFF"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/head"
-        app:layout_constraintLeft_toRightOf="@id/head"
-        app:layout_constraintTop_toTopOf="@id/head" />
-
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
+        android:layout_marginBottom="5dp"
         android:textColor="#FFF"
         android:textSize="12sp"
-        app:layout_constraintLeft_toLeftOf="@id/head"
-        app:layout_constraintTop_toBottomOf="@id/head" />
+        app:layout_constraintLeft_toLeftOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

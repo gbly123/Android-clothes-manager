@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:text="发现"
+        android:text="我的穿搭助手"
         android:textColor="#FFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
