@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.location.Address;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import com.example.redbook.db.dao.TalkCategoryDao;
 import com.example.redbook.db.dao.TalkDao;
 import com.example.redbook.db.entity.Talk;
 import com.example.redbook.db.entity.TalkCategory;
+import com.example.redbook.model.CheckNet;
 import com.example.redbook.ui.add.AddActivity;
 import com.example.redbook.utils.LocationUtils;
 import com.example.redbook.utils.StatusBarUtils;
@@ -50,6 +53,16 @@ public class MainActivity extends AppCompatActivity implements LocationUtils.OnA
         transparentStatusBar(getWindow());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //检查网络状态
+        if(CheckNet.getNetState(this)==CheckNet.NET_NONE)
+        {
+            Log.d("MWEATHER","网络不通");
+            Toast.makeText(MainActivity.this, "网络不通", Toast.LENGTH_SHORT).show();
+        }else {
+            Log.d("MWEATHER","网络正常");
+            Toast.makeText(MainActivity.this, "网络正常", Toast.LENGTH_SHORT).show();
+        }
 
         redViewModel = new ViewModelProvider(this).get(RedBookViewModel.class);
 
@@ -92,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements LocationUtils.OnA
         initDbData();
 
         getAddress();
+
+
     }
 
     private void getAddress() {

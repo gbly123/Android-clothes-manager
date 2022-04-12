@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.redbook.R;
 
-import org.w3c.dom.Text;
-
 public class StoreViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView cover;
